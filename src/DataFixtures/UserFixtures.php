@@ -16,9 +16,17 @@ class UserFixtures extends Fixture
             $user->setPassword(password_hash('user', PASSWORD_BCRYPT));
             $user->setEmail('user'.$i.'@fake.fr');
             $user->setRegisterDate(new \DateTime('-'.$i.' days'));
+            $user->setRoles('ROLE_USER');
             $manager->persist($user); // Il demande a doctrine de preparer l'insertion de $user en base de donnees
-
-        $manager->flush(); // flush valide les requetes et les executes 
         }
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setPassword(password_hash('admin', PASSWORD_BCRYPT));
+        $admin->setEmail('admin@fake.fr');
+        $admin->setRegisterDate(new \DateTime('now'));
+        $admin->setRoles('ROLE_ADMIN');
+        $manager->persist($admin);
+        $manager->flush();
+         // flush valide les requetes et les executes 
     }
 }

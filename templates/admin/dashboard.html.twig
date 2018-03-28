@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {# Commentaire #}
+    {# {{ msg }} = <?= $msg ?> #}
+    <h1>MoiJV</h1>
+    <a href="{{ path('logout') }}">Deconnexion</a>
+    <h2>Liste des utilisateurs : </h2>
+    <ul>
+        {# foreach( users as user) #}
+        {% for user in users  %}
+            <li>{{ user.username }} {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}
