@@ -21,10 +21,26 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+    public function findPaginated($page = 1)
+        {
+        $queryBuilder = $this->createQueryBuilder('p')
+                ->innerJoin('p.owner', 'u')
+                ->addSelect('u')
+                ->innerJoin('p.tags', 't')
+                ->addSelect('t') 
+                ->orderBy('p.id', 'ASC');
+        $pager = new DoctrineORMAdapter($queryBuilder);
+        $pager = new Pagerfanta($pager);
+        return $pager->setMaxPerPage(10)->setCurrentPage($page);
+       }
+
         public function findPaginatedByUser(User $user, $page = 1)
         {
             $queryBuilder = $this->createQueryBuilder('p')
-                    ->leftJoin('p.owner', 'u')
+                    ->innerJoin('p.owner', 'u')
+                    ->addSelect('u')
+                    ->innerJoin('p.tags', 't')
+                    ->addSelect('t')    
                     ->where('u = :user')
                     ->setParameter('user', $user)
                     ->orderBy('p.id', 'ASC');

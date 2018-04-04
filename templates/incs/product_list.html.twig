@@ -1,0 +1,73 @@
+        
+{% for produit in products %}
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="{{asset(produit.image)}}" alt="">
+            <div class="card-body">
+                <h4 class="card-title">{{ produit.title }}</h4>
+                <p class="card-text">{{ produit.description }}</p>
+                <div>
+                    {% for tag in produit.tags %}
+                        <span class="badge badge-info badge-pill">#{{ tag.name }}</span>
+                    {% endfor %}   
+                </div>
+            </div>
+            {% if is_granted('ROLE_USER') and produit.owner.id == app.user.id %}
+                <div class="card-footer">
+                    <a href="{{ path('delete_product', { 'id' : produit.id }) }}" class="btn btn-danger col-md-5"><i class="fa fa-trash"></i></a>
+                    <a href="{{ path('edit_product', { 'id' : produit.id }) }}" class="btn btn-success col-md-5"><i class="fa fa-edit"></i></a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Nom produit</th>
+                  <th>Description</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Nom produit</th>
+                  <th>Description</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </tfoot>
+              <tbody>
+{% for produit in products %}
+<tr>
+<td>{{ produit.title }}</td>
+<td>{{ produit.description }}</td>
+<td>
+    <img class="card-img-top" src="{{asset(produit.image)}}" alt="">
+</td> 
+<td>
+    <a href="{{ path('delete_product', { 'id' : produit.id }) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+    <a href="{{ path('edit_product', { 'id' : produit.id }) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+</td> 
+
+</tr>
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+-->     

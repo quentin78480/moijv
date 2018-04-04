@@ -40,7 +40,7 @@ class Product
     private $image;
 
      /**
-     * @ORM\ManyToMany(targetEntity="Tag", invertedBy="products")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      * @var Collection
      */
     private $tags;
@@ -85,11 +85,11 @@ class Product
         return $this;
     }
     
-    public function getOwner(): User {
+    public function getOwner(){
         return $this->owner;
     }
 
-    public function setOwner(User $owner) {
+    public function setOwner($owner) {
         $this->owner = $owner;
         return $this;
     }
@@ -103,8 +103,17 @@ class Product
         return $this;
     }
 
-    public function getTags(): Collection {
+    public function getTags(){
         return $this->tags;
     }
 
+    public function addTag($tag) {
+        if($this->tags->contains($tag)){
+            return;
+        } else {
+            $this->tags->add($tag);
+            $tag->getProducts($this);
+        }
+        
+    }
 }

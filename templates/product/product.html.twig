@@ -5,44 +5,8 @@
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Example</div>
           <a href="{{ path('add_product')}}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Nom produit</th>
-                  <th>Description</th>
-                  <th>Image</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Nom produit</th>
-                  <th>Description</th>
-                  <th>Image</th>
-                  <th>Action</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                  {% for produit in product %}
-                <tr>
-                  <td>{{ produit.title }}</td>
-                  <td>{{ produit.description }}</td>
-                  <td>
-                      <img class="card-img-top" src="{{asset(produit.image)}}" alt="">
-                  </td> 
-                  <td>
-                      <a href="{{ path('delete_product', { 'id' : produit.id }) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                      <a href="{{ path('edit_product', { 'id' : produit.id }) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
-                  </td> 
-                
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        
+              {% include 'incs/product_list.html.twig' with { 'products' : products, 'routeName' : 'home_paginated' } %}
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
 {% endblock %}

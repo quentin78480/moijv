@@ -21,14 +21,13 @@ class ProductController extends Controller
 {
     /**
      * @Route("/", name="product")
-     * Route("/{page}", name="product_paginated", requirements={"page"="\d+"})
+     * @Route("/{page}", name="product_paginated", requirements={"page"="\d+"})
      */
-    public function index(ProductRepository $productRepository, $page = 1)
+    public function index(ProductRepository $productRepository, $page =1)
     {
         $listProduct = $productRepository ->findPaginatedByUser($this->getUser(), $page);
-        return $this->render('product/product.html.twig', ['product' => $listProduct]);
+        return $this->render('product/product.html.twig', ['products' => $listProduct]);
     }
-    
      /**
      * @Route("/product/delete/{id}", name="delete_product")
      */
@@ -81,4 +80,5 @@ class ProductController extends Controller
             'form' => $formProduct->createView()
        ]);
     }
+    
 }
