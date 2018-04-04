@@ -4,7 +4,7 @@
 <div class="card mb-3">
         <div class="card-header">
           <i class="fa fa-table"></i> Data Table Example</div>
-          <a href="#" class="btn btn-success"><i class="fa fa-plus"></i>Ajouter un produit</a>
+          <a href="{{ path('add_product')}}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -12,6 +12,7 @@
                 <tr>
                   <th>Nom produit</th>
                   <th>Description</th>
+                  <th>Image</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -19,6 +20,7 @@
                 <tr>
                   <th>Nom produit</th>
                   <th>Description</th>
+                  <th>Image</th>
                   <th>Action</th>
                 </tr>
               </tfoot>
@@ -28,9 +30,12 @@
                   <td>{{ produit.title }}</td>
                   <td>{{ produit.description }}</td>
                   <td>
+                      <img class="card-img-top" src="{{asset(produit.image)}}" alt="">
+                  </td> 
+                  <td>
                       <a href="{{ path('delete_product', { 'id' : produit.id }) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                       <a href="{{ path('edit_product', { 'id' : produit.id }) }}" class="btn btn-success"><i class="fa fa-edit"></i></a>
-                  </td>
+                  </td> 
                 
                 </tr>
                 {% endfor %}

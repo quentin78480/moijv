@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @UniqueEntity("email")
@@ -51,6 +53,20 @@ class User implements UserInterface, \Serializable
      */ 
     private $roles;
     
+     /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="owner")
+     * @var Collection products
+     */
+    private $products;
+    
+    public function __construct() {
+        $this->products = new ArrayCollection();
+    }
+    
+    function getProducts(): Collection {
+        return $this->products;
+    }
+
     function setRoles($roles) {
         $this->roles = $roles;
     }

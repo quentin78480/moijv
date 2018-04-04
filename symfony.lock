@@ -80,6 +80,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "pagerfanta/pagerfanta": {
+        "version": "v1.0.5"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

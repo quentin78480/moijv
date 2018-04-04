@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,7 +21,17 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
-
+        public function findPaginatedByUser(User $user, $page = 1)
+        {
+            $queryBuilder = $this->createQueryBuilder('p')
+                    ->leftJoin('p.owner', 'u')
+                    ->where('u = :user')
+                    ->setParameter('user', $user)
+                    ->orderBy('p.id', 'ASC');
+        $pager = new DoctrineORMAdapter($queryBuilder);
+        $pager = new Pagerfanta($pager);
+        return $pager->setMaxPerPage(10)->setCurrentPage($page);
+        }
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
