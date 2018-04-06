@@ -8,7 +8,7 @@
                 <p class="card-text">{{ produit.description }}</p>
                 <div>
                     {% for tag in produit.tags %}
-                        <span class="badge badge-info badge-pill">#{{ tag.name }}</span>
+                        <a href="{{ path('tag',{'slug' : tag.slug}) }}" class="badge badge-info badge-pill">#{{ tag.name }}</a>
                     {% endfor %}   
                 </div>
             </div>
@@ -16,6 +16,10 @@
                 <div class="card-footer">
                     <a href="{{ path('delete_product', { 'id' : produit.id }) }}" class="btn btn-danger col-md-5"><i class="fa fa-trash"></i></a>
                     <a href="{{ path('edit_product', { 'id' : produit.id }) }}" class="btn btn-success col-md-5"><i class="fa fa-edit"></i></a>
+                </div>
+            {% elseif  is_granted('ROLE_USER') %}
+                <div class="card-footer">
+                    <a href="{{ path('add_loan', { 'id' : produit.id })}}" class="btn btn-success col-md-5"> Emprunter</a>
                 </div>
             {% endif %}
         </div>

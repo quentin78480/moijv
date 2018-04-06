@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des produits du tag : {{ tag.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ block('title') }}</h1>
+    <h1>{{ block('title') }}</h1> {# {{ block('title') }} : permet de mettre le contenu du block title #}
+    <div class="row text-center">
+    {% include 'incs/product_list.html.twig' with { 'products' : products, 'routeName' : 'tag_paginated'} %}
+    </div>
+{% endblock %}
+    

@@ -6,12 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  */
-class Product
-{
+class Product {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,7 +29,7 @@ class Product
      * @ORM\Column(type="text")
      */
     private $description;
-    
+
     /**
      * @ORM\Column(type="string", length=255 )
      * Assert\NotBlank(groups={"insertion"})
@@ -39,53 +38,54 @@ class Product
      */
     private $image;
 
-     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products", cascade="persist")
      * @var Collection
      */
     private $tags;
-    
+
     public function __construct() {
         $this->tags = new ArrayCollection();
+        $this->loans = new ArrayCollection();
     }
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="products")
      * @var User owner
-     */ 
+     */
     private $owner;
-    
-    
-    public function getId()
-    {
+
+    /**
+     * @ORM\OneToMany(targetEntity="Loan", mappedBy="product")
+     * @var Collection 
+     */
+    private $loans;
+
+    public function getId() {
         return $this->id;
     }
 
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
-    {
+    public function setTitle(string $title): self {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
-    {
+    public function setDescription(string $description): self {
         $this->description = $description;
 
         return $this;
     }
-    
-    public function getOwner(){
+
+    public function getOwner() {
         return $this->owner;
     }
 
@@ -93,7 +93,7 @@ class Product
         $this->owner = $owner;
         return $this;
     }
-    
+
     public function getImage() {
         return $this->image;
     }
@@ -103,17 +103,31 @@ class Product
         return $this;
     }
 
-    public function getTags(){
+    public function getTags() {
         return $this->tags;
     }
 
     public function addTag($tag) {
-        if($this->tags->contains($tag)){
+        if ($this->tags->contains($tag)) {
             return;
         } else {
             $this->tags->add($tag);
             $tag->getProducts($this);
         }
-        
     }
+
+    public function setTags($tags) {
+        $this->tags = $tags;
+        return $this;
+    }
+
+    public function getLoans() {
+        return $this->loans;
+    }
+
+    public function setLoans( $loans) {
+        $this->loans = $loans;
+        return $this;
+    }
+
 }
